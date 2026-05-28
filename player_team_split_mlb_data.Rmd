@@ -1,0 +1,66 @@
+---
+title: "launch_angle_analysis"
+author: "Lemonan"
+date: "2026-05-22"
+output: html_document
+---
+
+
+```{r}
+library(baseballr)
+library(dplyr)
+```
+
+get all player data by team
+
+```{r}
+library(httr)
+library(jsonlite)
+library(dplyr)
+library(purrr)
+library(tibble)
+
+all_teams_df <- map_dfr(1:30, function(team_id) {
+
+  url <- paste0(
+    "https://www.fangraphs.com/api/leaders/major-league/data?",
+    "pos=all&stats=bat&lg=all&qual=0",
+    "&season=2025&season1=2015",
+    "&startdate=&enddate=",
+    "&month=0&hand=",
+    "&team=", team_id,
+    "&pageitems=200000",
+    "&ind=1"
+  )
+
+  res <- GET(url)
+
+  data <- fromJSON(
+    content(res, "text", encoding = "UTF-8")
+  )$data
+
+  as_tibble(data)
+})
+```
+
+normalize team and name string from html
+
+```{r}
+library(stringr)
+
+all_teams_df$Name <- str_extract(all_teams_df$Name, "(?<=>)[^<]+")
+all_teams_df$Team <- str_extract(all_teams_df$Team, "(?<=>)[^<]+")
+```
+
+get rid of all players without a plate appearance
+```{r}
+all_teams_df <- all_teams_df %>%
+  filter(PA != 0)
+```
+
+get wanted variables
+
+```{r}
+player_team_pa <- all_teams_df %>%
+  select(Name, Team, Season, PA)
+```
