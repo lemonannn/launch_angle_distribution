@@ -1,4 +1,4 @@
-﻿"last_name, first_name","player_id","year","pa","k_percent","bb_percent","woba","xwoba","sweet_spot_percent","barrel_batted_rate","hard_hit_percent","avg_best_speed","avg_hyper_speed","whiff_percent","swing_percent"
+﻿"last_name, first_name","player_id","Season","pa","k_percent","bb_percent","woba","xwoba","sweet_spot_percent","barrel_batted_rate","hard_hit_percent","avg_best_speed","avg_hyper_speed","whiff_percent","swing_percent"
 "Colon, Bartolo",112526,2015,64,37.5,0,".136",".153",23.1,0,15.4,"93.759828667","91.247927",30.6,58.1
 "Hunter, Torii",116338,2015,567,18.5,6.2,".304",".290",28.5,5.6,34.9,"98.563404126","93.39348",23.1,53.4
 "Ortiz, David",120074,2015,614,15.5,12.5,".379",".420",34.8,14.6,49.1,"102.85113274","96.053057671",23.2,44.7

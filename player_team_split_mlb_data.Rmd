@@ -48,19 +48,25 @@ normalize team and name string from html
 ```{r}
 library(stringr)
 
-all_teams_df$Name <- str_extract(all_teams_df$Name, "(?<=>)[^<]+")
-all_teams_df$Team <- str_extract(all_teams_df$Team, "(?<=>)[^<]+")
+new_all_teams_df <- all_teams_df
+new_all_teams_df$pos <- str_extract(all_teams_df$Name, "(?<=position=)[^&\"]+")
+new_all_teams_df$Name <- str_extract(all_teams_df$Name, "(?<=>)[^<]+")
+new_all_teams_df$Team <- str_extract(all_teams_df$Team, "(?<=>)[^<]+")
 ```
 
 get rid of all players without a plate appearance
 ```{r}
-all_teams_df <- all_teams_df %>%
+new_all_teams_df <- new_all_teams_df %>%
   filter(PA != 0)
 ```
 
 get wanted variables
 
 ```{r}
-player_team_pa <- all_teams_df %>%
-  select(Name, Team, Season, PA)
+player_team_pa <- new_all_teams_df %>%
+  select(Name, Team, pos, Season, PA)
+```
+
+```{r}
+write.csv(player_team_pa, "player_team_pa.csv", row.names = FALSE)
 ```
